@@ -23,7 +23,7 @@ class About extends React.Component {
                         <a href="https://github.com/tichaonax/electronics-react-client">electronics-react-client</a> - This codebase is stored in GitHub.
                     </li>
                     <li>
-                        <a href="https://github.com/tichaonax/ElectrocincsCalcServer">ElectrocincsCalcServer</a> - The API codebase in C# is stored in GitHub.
+                        <a href="https://github.com/tichaonax/ElectrocincsCalcServer">ElectrocincsCalcServer</a> - The API codebase in C# is stored in GitHub, given color codes returns matching resistance and tolerance.
                     </li>
                 </ol>
             </div>
