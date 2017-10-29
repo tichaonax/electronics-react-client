@@ -70,7 +70,6 @@ export class Nav extends React.Component {
         var bandCColor = this.refs.bandCColor.value;
         var bandDColor = this.refs.bandDColor.value;
 
-        console.log("Submit Calculation");
         window.location.hash = `#/?bandAColor=${bandAColor}&bandBColor=${bandBColor}&bandCColor=${bandCColor}&bandDColor=${bandDColor}`;
         }
 
