@@ -1,7 +1,8 @@
-var React = require('react');
-var Nav = require('Nav');
+import React from 'react';
+import {connect} from 'react-redux';
+import Nav from 'Nav';
 
-class Main extends React.Component {
+export class Main extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -22,4 +23,4 @@ class Main extends React.Component {
     }
 }
 
-module.exports = Main;
+export default connect()(Main)

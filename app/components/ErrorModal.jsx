@@ -1,8 +1,9 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
+import React from 'react';
+import ReactDOM from 'react-dom';
 var ReactDOMServer = require('react-dom/server');
+var {connect} = require('react-redux');
 
-class ErrorModal extends React.Component {
+export class ErrorModal extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -33,5 +34,4 @@ class ErrorModal extends React.Component {
         );
     }
 }
-
-module.exports = ErrorModal;
+export default connect()(ErrorModal)

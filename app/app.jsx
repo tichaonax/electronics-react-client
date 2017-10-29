@@ -1,11 +1,17 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
-var {Route, Router, IndexRoute, hashHistory} = require('react-router');
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-var Main = require('Main');
-var OhmCalculator = require('OhmCalculator');
-var CapacitanceCalculator = require('CapacitanceCalculator');
-var About = require('About');
+import {Provider} from 'react-redux';
+import router from 'app/router/';
+
+var actions = require('./actions/index');
+var store = require('configureStore').configure();
+
+//set band colors codes to their defaults
+store.dispatch(actions.changeBandAColor('black'));
+store.dispatch(actions.changeBandBColor('black'));
+store.dispatch(actions.changeBandCColor('black'));
+store.dispatch(actions.changeBandDColor('gold'));
 
 // Load foundation
 $(document).foundation();
@@ -14,12 +20,8 @@ $(document).foundation();
 require('style!css!sass!applicationStyles')
 
 ReactDOM.render(
-    <Router history={hashHistory}>
-        <Route path="/" component={Main}>
-            <Route path="capacitance" component={CapacitanceCalculator}/>
-            <Route path="about" component={About}/>
-            <IndexRoute component={OhmCalculator}/>
-        </Route>
-    </Router>,
+    <Provider store={store}>
+        {router}
+    </Provider>,
     document.getElementById('app')
 );

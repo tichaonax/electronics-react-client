@@ -1,6 +1,6 @@
-var React = require('react');
-
-class CapacitanceCalculator extends React.Component {
+import React from 'react';
+var {connect} = require('react-redux');
+export class CapacitanceCalculator extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -15,4 +15,8 @@ class CapacitanceCalculator extends React.Component {
     }
 }
 
-module.exports = CapacitanceCalculator;
+export default connect((state) => {
+    return {
+        bandColor: state.bandColor
+    }
+})(CapacitanceCalculator);

@@ -1,16 +1,17 @@
-var React = require('react');
-var OhmCalculatorMessage = require('OhmCalculatorMessage');
-var ElectronicsValueCalculator = require('ElectronicsValueCalculator');
-var ErrorModal = require('ErrorModal');
+import React from 'react';
+var {connect} = require('react-redux');
+import OhmCalculatorMessage from 'OhmCalculatorMessage';
+import ElectronicsValueCalculator from 'ElectronicsValueCalculator';
+import ErrorModal from 'ErrorModal';
 
-class OhmCalculator extends React.Component {
+export class OhmCalculator extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
             value: undefined,
             tolerance:undefined,
-            isLoading: true,
+            isLoading: false,
             errorMessage: undefined
         }
 
@@ -39,19 +40,31 @@ class OhmCalculator extends React.Component {
     }
 
     componentWillReceiveProps(newProps){
-        this.loadData(newProps);
+        var bandColor = newProps.bandColor;
+        this.handleGetValue(
+            bandColor.bandAColor.value,
+            bandColor.bandBColor.value,
+            bandColor.bandCColor.value,
+            bandColor.bandDColor.value);
+    }
+
+    setBandColor(bandSelect, bandColor){
+        let item = $(`select[name=${bandSelect}]`);
+        item.find(`option[value=${bandColor}]`).attr('selected',true);
+        item.attr('style', `background-color: ${bandColor}`);
     }
 
     handleGetValue(bandAColor, bandBColor, bandCColor, bandDColor) {
+        this.setBandColor("bandAColor", bandAColor);
+        this.setBandColor("bandBColor", bandBColor);
+        this.setBandColor("bandCColor", bandCColor);
+        this.setBandColor("bandDColor", bandDColor);
+
         var that = this;
 
         this.setState({
             isLoading: true,
             errorMessage: undefined,
-            bandAColor: undefined,
-            bandBColor: undefined,
-            bandCColor: undefined,
-            bandDColor: undefined,
             value: undefined,
             tolerance:undefined
         })
@@ -60,10 +73,6 @@ class OhmCalculator extends React.Component {
             .then(function (ValueData) {
                 console.log("ValueData", ValueData);
             that.setState({
-                bandAColor: bandAColor,
-                bandBColor: bandBColor,
-                bandCColor: bandCColor,
-                bandDColor: bandDColor,
                 value: ValueData.value,
                 tolerance: ValueData.tolerance,
                 isLoading: false
@@ -78,7 +87,7 @@ class OhmCalculator extends React.Component {
 
     render() {
 
-        var {isLoading, value, tolerance, bandAColor, bandBColor, bandCColor, bandDColor, errorMessage} = this.state;
+        var {isLoading, value, tolerance, bandColor, errorMessage} = this.state;
 
         function renderError() {
             if (typeof errorMessage === 'string') {
@@ -104,4 +113,8 @@ class OhmCalculator extends React.Component {
     }
 }
 
-module.exports = OhmCalculator;
+export default connect((state) => {
+    return {
+        bandColor: state.bandColor
+    }
+})(OhmCalculator);

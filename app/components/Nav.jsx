@@ -1,23 +1,35 @@
 var React = require('react');
 var {Link, IndexLink} = require('react-router');
+var {connect} = require('react-redux');
 
-class Nav extends React.Component {
+var actions = require('./../actions/index');
+
+export class Nav extends React.Component {
     constructor(props) {
         super(props);
+        this.dispatch = props.dispatch;
         this.onSearch = this.onSearch.bind(this);
+        this.state = {
+            selectedColor : "black",
+            selectedColorTitle : "Black"
+        }
     }
 
     onBandAColorChange(){
-        this.refs.bandAColor.style.backgroundColor=this.refs.bandAColor.value;
+        this.refs.bandAColor.style.backgroundColor = this.refs.bandAColor.value;
+        this.dispatch(actions.changeBandAColor(this.refs.bandAColor.value));
     }
     onBandBColorChange(){
-        this.refs.bandBColor.style.backgroundColor=this.refs.bandBColor.value;
+        this.refs.bandBColor.style.backgroundColor = this.refs.bandBColor.value;
+        this.dispatch(actions.changeBandBColor(this.refs.bandBColor.value));
     }
     onBandCColorChange(){
-        this.refs.bandCColor.style.backgroundColor=this.refs.bandCColor.value;
+        this.refs.bandCColor.style.backgroundColor = this.refs.bandCColor.value;
+        this.dispatch(actions.changeBandCColor(this.refs.bandCColor.value));
     }
     onBandDColorChange(){
         this.refs.bandDColor.style.backgroundColor=this.refs.bandDColor.value;
+        this.dispatch(actions.changeBandDColor(this.refs.bandDColor.value));
     }
 
     renderColorBands(){
@@ -41,8 +53,6 @@ class Nav extends React.Component {
         )
     }
 
-
-
     onSearch(e) {
         e.preventDefault();
         var bandAColor = this.refs.bandAColor.value;
@@ -50,10 +60,22 @@ class Nav extends React.Component {
         var bandCColor = this.refs.bandCColor.value;
         var bandDColor = this.refs.bandDColor.value;
 
+        console.log("Submit Calculation");
         window.location.hash = `#/?bandAColor=${bandAColor}&bandBColor=${bandBColor}&bandCColor=${bandCColor}&bandDColor=${bandDColor}`;
         }
 
     render() {
+
+        var {bandColor}=this.props;
+        console.log("bandColor",bandColor);
+
+        var options =[];
+
+        options.push({value: "black", label: "Black"});
+        options.push({value: "red", label: "Red"});
+        options.push({value: "orange", label: "Orange"});
+
+
         return (
             <div className="top-bar">
 
@@ -76,28 +98,28 @@ class Nav extends React.Component {
                     <form onSubmit={this.onSearch}>
                         <ul className="menu">
                             <li>
-                                <select ref="bandAColor" onChange={()=>{
+                                <select name="bandAColor" ref="bandAColor" onChange={()=>{
                                     this.onBandAColorChange();
                                 }}>
                                     {this.renderColorBands()}
                                 </select>
                             </li>
                             <li>
-                                <select ref="bandBColor" onChange={()=>{
+                                <select  name="bandBColor"  ref="bandBColor" onChange={()=>{
                                     this.onBandBColorChange();
                                 }}>
                                     {this.renderColorBands()}
                                 </select>
                             </li>
                             <li>
-                                <select ref="bandCColor" onChange={()=>{
+                                <select  name="bandCColor"  ref="bandCColor" onChange={()=>{
                                     this.onBandCColorChange();
                                 }}>
                                     {this.renderColorBands()}
                                 </select>
                             </li>
                             <li>
-                                <select ref="bandDColor" onChange={()=>{
+                                <select  name="bandDColor"  ref="bandDColor" onChange={()=>{
                                     this.onBandDColorChange();
                                 }}>
                                     {this.renderColorBands()}
@@ -113,5 +135,10 @@ class Nav extends React.Component {
         );
     }
 }
-
-module.exports = Nav;
+export default connect(
+    (state) => {
+        return {
+            bandColor: state.bandColor,
+        }
+    }
+)(Nav);
