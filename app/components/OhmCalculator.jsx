@@ -3,6 +3,7 @@ var {connect} = require('react-redux');
 import OhmCalculatorMessage from 'OhmCalculatorMessage';
 import ElectronicsValueCalculator from 'ElectronicsValueCalculator';
 import ErrorModal from 'ErrorModal';
+import {setBandColor} from 'app/common/Utils';
 
 export class OhmCalculator extends React.Component {
     constructor(props) {
@@ -48,17 +49,11 @@ export class OhmCalculator extends React.Component {
             bandColor.bandDColor.value);
     }
 
-    setBandColor(bandSelect, bandColor){
-        let item = $(`select[name=${bandSelect}]`);
-        item.find(`option[value=${bandColor}]`).attr('selected',true);
-        item.attr('style', `background-color: ${bandColor}`);
-    }
-
     handleGetValue(bandAColor, bandBColor, bandCColor, bandDColor) {
-        this.setBandColor("bandAColor", bandAColor);
-        this.setBandColor("bandBColor", bandBColor);
-        this.setBandColor("bandCColor", bandCColor);
-        this.setBandColor("bandDColor", bandDColor);
+        setBandColor("bandAColor", bandAColor);
+        setBandColor("bandBColor", bandBColor);
+        setBandColor("bandCColor", bandCColor);
+        setBandColor("bandDColor", bandDColor);
 
         var that = this;
 

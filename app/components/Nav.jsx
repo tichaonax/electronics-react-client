@@ -4,6 +4,8 @@ var {connect} = require('react-redux');
 
 var actions = require('./../actions/index');
 
+import {setBandColor} from 'app/common/Utils';
+
 export class Nav extends React.Component {
     constructor(props) {
         super(props);
@@ -13,6 +15,14 @@ export class Nav extends React.Component {
             selectedColor : "black",
             selectedColorTitle : "Black"
         }
+    }
+
+    componentDidMount() {
+       var {bandColor}=this.props;
+            setBandColor("bandAColor", bandColor.bandAColor.value);
+            setBandColor("bandBColor", bandColor.bandBColor.value);
+            setBandColor("bandCColor", bandColor.bandCColor.value);
+            setBandColor("bandDColor", bandColor.bandDColor.value);
     }
 
     onBandAColorChange(){
@@ -68,13 +78,6 @@ export class Nav extends React.Component {
 
         var {bandColor}=this.props;
         console.log("bandColor",bandColor);
-
-        var options =[];
-
-        options.push({value: "black", label: "Black"});
-        options.push({value: "red", label: "Red"});
-        options.push({value: "orange", label: "Orange"});
-
 
         return (
             <div className="top-bar">
