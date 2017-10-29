@@ -9,8 +9,13 @@ class About extends React.Component {
         return (
             <div>
                 <h1 className="text-center page-title">About</h1>
-                <p>A simple Electronics Component Value Calculator application using react.</p>
+                <p>A simple color coding based Electronics Component Value Calculator application using react.</p>
+                <p>By Tichaona Hwandaza tichaona@yahoo.com.</p>
+                <p/>
                 <ol>
+                    <li>
+                       Visit  <a href="https://en.wikipedia.org/wiki/Electronic_color_code">Wikipedia</a> -for more information on color coding.
+                    </li>
                     <li>
                         <a href="https://facebook.github.io/react">React</a> - React JavaScript framework that I used.
                     </li>
